@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.douzone.backend.dao.MemberDAO">
+
+	<resultMap type="com.douzone.backend.vo.MemberVO" id="memberVO">
+		<result property="userid" column="user_id"/>
+		<result property="username" column="user_name"/>
+		<result property="userpwd" column="user_pwd"/>
+		<result property="userphone" column="user_phone"/>
+		<result property="useremail" column="user_email"/>
+		<result property="userbirth" column="user_birth"/>
+	</resultMap>
+
+	<select id="checkDupId" resultType="int">
+		select count(*) from tb_member where user_id=#{userid}
+  	</select>
+  	
+  	<select id="checkDupEmail" resultType="int">
+		select count(*) from tb_member where user_email=#{useremail}
+  	</select>
+  	
+  	<insert id="memberInsert" parameterType="com.douzone.backend.vo.MemberVO">
+		insert into tb_member(user_id, user_name, user_pwd, user_phone, user_email, user_birth) 
+		values(#{userid}, #{username}, #{userpwd}, #{userphone}, #{useremail}, #{userbirth})	
+  	</insert>
+  	
+  	<select id="memberSelectbyId" parameterType="String" resultMap="memberVO">
+  		select * from tb_member where user_id=#{userid}
+  	</select>
+  	
+  	<select id="memberSelectbyEmail" parameterType="String" resultMap="memberVO">
+  		select * from tb_member where user_email=#{useremail}
+  	</select>
+
+</mapper>

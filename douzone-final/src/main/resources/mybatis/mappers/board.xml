@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.douzone.backend.dao.BoardDAO">
+
+	<select id="getBoardList" resultType="com.douzone.backend.vo.BoardVO">
+		select * from tb_board where bcategory like #{bcategory} order by bdate desc limit 10
+  	</select>
+  	
+  	<select id="getBoardVO" resultType="com.douzone.backend.vo.BoardVO">
+		select * from tb_board where bno = #{bno}
+  	</select>
+  	
+  	<delete id="boardDelete">
+  		delete from tb_board where bno = #{bno}
+  	</delete>
+  	
+  	<insert id="boardInsert">
+    	insert into tb_board(btitle, bwriter, bcontents, bcategory)
+    	values (#{btitle}, #{bwriter}, #{bcontents}, #{bcategory})
+	<selectKey resultType="String" order="AFTER" keyProperty="bno">
+    	SELECT LAST_INSERT_ID()
+    </selectKey>
+  	</insert>
+  	
+  	<update id="boardUpdate">
+  		update tb_board set btitle=#{btitle}, bcontents=#{bcontents}, bcategory=#{bcategory} where bno=#{bno}
+  	</update>
+</mapper>
